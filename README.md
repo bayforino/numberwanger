@@ -1,0 +1,1 @@
+Numberwanger is currently a work in progress. It can do individual operations, but doesn't want to chain them together (you won't be able to input 5 * 5 - 8, for example.)

@@ -1,0 +1,106 @@
+@import url('https://necolas.github.io/normalize.css/8.0.1/normalize.css');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+
+
+html{
+    height: 100vh;
+    font-family: 'Fira Code', sans-serif;
+}
+
+body{
+    background-color: rgb(36, 33, 33);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    
+}
+
+.calculator-main{
+    position:absolute;
+    width: auto;
+    height: auto;
+    background-color: rgb(48, 48, 48);
+    display: grid;
+    grid-template-columns: repeat(4, 4em);
+    grid-template-rows: 4em repeat(5, 3em) 1em;
+    row-gap: 1.2em;
+    column-gap: 1.2em;
+    padding: 1.2em;
+    border-radius: 0.15em;
+    box-sizing: border-box;
+}
+
+.calculator-main button{
+    
+    background-color: rgb(68, 68, 68);
+    border:none;
+    border-radius: 0.1em;
+    box-shadow: 0 0 0 0 rgb(68, 68, 68);;
+    transition: background-color 0.1s, box-shadow 0.1s;
+    outline: none;
+    user-select: none;
+    
+}
+
+.calculator-main button:hover{
+    background-color: rgb(95, 95, 95);
+    box-shadow: 0 0 0 1px rgb(95, 95, 95);
+    border-width: 5px;
+    cursor: pointer;
+    text-shadow: 0 0 0 3px orange;
+
+}
+
+.calculator-main button:active:hover{
+    background-color: rgb(201, 201, 153);
+    box-shadow: 0 0 0 1px rgb(201, 201, 153);
+}
+
+#zero{
+    grid-area: 6 / 1 / span 1 / span 2;
+}
+
+#display{
+    
+    grid-column: 1 / 5;
+    background-color: rgb(97, 97, 97);
+    color:white;
+    font-size: 2em;
+    display:flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    border-radius: 0.15em;
+    height:100%;
+    margin-bottom: 0.5em;
+    padding-right:0.5em;
+}
+
+.function-button{
+    color: orange;
+}
+
+.number-button{
+    color: rgb(176, 176, 255);
+}
+
+#backspace{
+    font-family: sans-serif;
+}
+
+#clear{
+    grid-area: 2 / 1 / span 1 / span 2;
+}
+
+
+.logo{
+    grid-area: 7 / 3 / span 1 / span 2;
+    display:flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    color:rgb(163, 163, 163);
+    user-select: none;
+    margin:0;
+}
