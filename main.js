@@ -15,6 +15,7 @@ const eightButton = document.getElementById("eight");
 const nineButton = document.getElementById("nine");
 const zeroButton = document.getElementById("zero");
 const equalsButton = document.getElementById("equals");
+const backSpaceButton = document.getElementById("backspace");
 
 operatorNew = "";
 operatorLast = "";
@@ -51,43 +52,50 @@ function clearAll() {
   operatorLast = "";
 }
 
-function operate(operator, a, b) {
-    operatorNew = operator;
-  if (number1 === undefined) {
-      number1 = display.textContent;
-      displayIsAnswer = true;
-      console.log(`setting number 1 as ${number1}`);
+function backSpace() {
+  if (display.textContent > 9) {
+    let displayValue = display.textContent.toString();
+    display.textContent = parseInt(displayValue.slice(0, -1));
   } else {
-    operatorLast = operatorNew;
-    console.log(`operatorLast is now ${operatorLast}`)
+    display.textContent = 0;
+    displayIsAnswer = true;
+  }
+}
+
+function operate(operator, a, b) {
+  operatorNew = operator;
+  if (number1 === undefined) {
+    number1 = display.textContent;
+  } else {
     number2 = display.textContent;
     display.textContent = "";
-    console.log(`setting number 2 as ${number2}`);
-    console.log(
-      `number 1 is: ${number1}, number 2 is: ${number2}, operatorLast is: ${operatorLast} operatorNew is: ${operatorNew}`
-    );
     if (operatorLast !== "") {
       if (operatorLast === "multiply") {
-          console.log('multiplying');
         answer = multiply(number1, number2);
       } else if (operatorLast === "divide") {
-          console.log('dividing')
-        answer = divide(number1, number2);
+        if (number1 == 0 || number2 == 0) {
+          answer = `5318008`;
+        } else {
+          answer = divide(number1, number2);
+        }
       } else if (operatorLast === "add") {
-          console.log('adding');
         answer = add(number1, number2);
       } else if (operatorLast === "subtract") {
-          console.log('subtracting');
         answer = subtract(number1, number2);
       }
-      
     }
-    
+
     display.textContent = answer;
     number1 = answer;
     number2 = undefined;
-    displayIsAnswer = true;
   }
+  displayIsAnswer = true;
+  operatorLast = operatorNew;
+}
+
+function removeTransition(e) {
+  if (e.propertyName !== "box-shadow") return;
+  this.classList.remove("active");
 }
 
 //event listeners
@@ -119,10 +127,39 @@ subtractButton.addEventListener("click", () => {
 });
 
 equalsButton.addEventListener("click", () => {
-  operate(operatorNew, number1, number2);
+  operate(``, number1, number2);
   display.textContent = answer;
 });
 
 clearButton.addEventListener("click", () => {
   clearAll();
+});
+
+backSpaceButton.addEventListener("click", () => {
+  backSpace();
+});
+
+const buttons = document.querySelectorAll(".calculator-button");
+buttons.forEach((button) =>
+  button.addEventListener("transitionend", removeTransition)
+);
+
+window.addEventListener("keydown", function (e) {
+  if (e.keyCode === 56 && e.shiftKey === true) {
+    const key = document.querySelector(`button[id="multiply"]`);
+    key.classList.add("active");
+    key.click();
+  } else if (e.keyCode === 187 && e.shiftKey === true) {
+    const key = document.querySelector(`button[id="add"]`);
+    key.classList.add("active");
+    key.click();
+  } else if (e.keyCode === 187 || e.keyCode === 13) {
+    const key = document.querySelector(`button[id="equals"]`);
+    key.classList.add("active");
+    key.click();
+  } else {
+    const key = document.querySelector(`button[data-key='${e.keyCode}']`);
+    key.classList.add("active");
+    key.click();
+  }
 });
